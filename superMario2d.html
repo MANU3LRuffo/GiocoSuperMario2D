@@ -12,6 +12,7 @@
             background-image: url('mattoncinoSuperMario2D.png');
             width: 620px; height: 120px;
             margin-top: 33em;
+            
         }
         img{
             position: absolute;
@@ -22,17 +23,34 @@
             background-image: url('superMario2D.png');
             height: 66px;
             width: 50px;
-            top: 30em;
+            position: absolute;
+            top: 465px;
 
         }
     </style>
     <script>
         let superMarioY = 300;
         let superMarioX = 300;
+        let timer;
+        function avviaTimer(){
+            timer = window.setInterval(avviaTimer, 1000);
+        }
+        let durataSalto;
         function pigiato(evento){
             let superMario = document.getElementById("superMario");
+            if(evento.key == 'w'){ superMarioY-=10; }
+	        if(evento.key == 's'){ superMarioY+=10; }
+	        if(evento.key == 'a'){ superMarioX-=10; }
+	        if(evento.key == 'd'){ superMarioX+=10; }
+	        if(evento.key == ' '){
+                let altezzaSalto = 80; // Altezza del salto
+                let durataSalto = 300; // Durata prima di tornare giù (in millisecondi)
 
-        }
+                 // Salto verso l'alto
+                superMarioY -= altezzaSalto;
+                superMario.style.top = superMarioY + "px";
+                window.clearInterval(timer);
+            }}
     </script>
 </head>
     <body onkeydown="pigiato(event)">
