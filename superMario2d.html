@@ -17,11 +17,11 @@
         }
         #terreno2{
             background-image: url('mattoncinoSuperMario2D.png');
-            height: 120px; width: 876px;
+            height: 120px; width: 1500px;
         }
         img{
             position: absolute;
-            width: 1200px; height: 120px;
+            width: 1900px; height: 120px;
             margin-top: -33em;
         }
         #superMario{
@@ -40,12 +40,11 @@
         }
     </style>
     <script>
-<<<<<<< HEAD
         "use strict";
         let superMarioX = 0;
         let superMarioY;
         let superMario;
-        let timer;
+        let gravitaTimer;
         function avviaTimer(){
             superMario = document.getElementById("superMario");
             superMarioY = parseInt(window.getComputedStyle(superMario).top); 
@@ -55,31 +54,61 @@
             let player = document.getElementById("themeSong");
             console.log(player);
             player.play();
+
+            gravitaTimer = setInterval(gravita, 30);
         }
         let altezzaSalto=80; // Altezza del salto
         function pigiato(evento){
             if(evento.key == 'w' || evento.key == ' '){
-                console.log("salta");
-                let durataSalto = 300; // Durata prima di tornare giù (in millisecondi)
-                 // Salto verso l'alto
-                superMarioY -= altezzaSalto;
-                superMario.style.top = superMarioY + "px";
-                 setTimeout(abbassa,durataSalto);
+                if(verificaCollisione()){
+                    // Salto verso l'alto
+                    superMarioY -= altezzaSalto;
+                    superMario.style.top = superMarioY + "px";
+                    setTimeout(abbassa,durataSalto);
+                }
+                let durataSalto = 300;
+
+                 
+                
             }
 	        if(evento.key == 's'){
-                superMarioY+=10;
-                superMario.style.top=superMarioY+"px";
+                if (!verificaCollisione()) {
+                        superMarioY += 10;
+                        superMario.style.top = superMarioY + "px";    
+                }
             }
 	        if(evento.key == 'a'){
                 superMarioX-=10; superMario.style.left = superMarioX +"px";
             }
 	        if(evento.key == 'd'){ 
                 superMarioX+=10; superMario.style.left = superMarioX +"px";
+                window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
             }
         }
         function abbassa(){
             superMarioY+=altezzaSalto;
             superMario.style.top = superMarioY + "px";
+        }
+        function verificaCollisione() {
+            let marioRect = superMario.getBoundingClientRect();
+            let terreno1 = document.getElementById("terreno").getBoundingClientRect();
+            let terreno2 = document.getElementById("terreno2").getBoundingClientRect();
+
+            return (verificaSingolaCollisione(marioRect, terreno1) || verificaSingolaCollisione(marioRect, terreno2));
+        }
+        function verificaSingolaCollisione(rect1, rect2) {
+            return !(
+                rect1.bottom < rect2.top ||
+                rect1.top > rect2.bottom ||
+                rect1.right < rect2.left ||
+                rect1.left > rect2.right
+            );
+        }
+        function gravita() {
+            if (!verificaCollisione()) {
+                superMarioY += 5; // velocità di caduta
+                superMario.style.top = superMarioY + "px";
+            }
         }
 
     </script>
@@ -89,7 +118,7 @@
         <div id="terreno"></div>
         <div id="terreno2"></div>
         <img src="cieloSuperMario2D.png" alt="cielo" >
-        <audio src="Super Mario Bros. Theme Song.mp3" id="themeSong" onload="inizia()"></audio>
+        <audio src="Super Mario Bros. Theme Song.mp3" id="themeSong" ></audio>
         <p>TIME</p>
     </body>
 </html>
