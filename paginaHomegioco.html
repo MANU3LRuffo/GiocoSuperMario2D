@@ -2,15 +2,31 @@
 <html>
 
 <head>
-    <title>Page Title</title>
+    <title>Home superMario2D</title>
 </head>
-
-<body>
-    <script>
-        "use strict";
-        alert("Hello, world!");
-    </script>
-
-</body>
-
+<style>
+    body{
+        background-image: url("sfondoHomegioco.jpg");
+        background-size: 50em;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-top: 40em;
+    }
+    div{
+        padding: 10px;
+        cursor: pointer;
+        border: 10px;
+    }
+</style>
+ <script>
+    function avviaMusica(){
+            let player = document.getElementById("homeSong");
+            console.log(player);
+            player.play();
+    }
+ </script>
+    <body>
+        <audio src="Super Mario Bros. Theme Song.mp3" loop autoplay id="homeSong"></audio>
+        <div id="giocare" >Gioca</div>
+    </body>
 </html>
