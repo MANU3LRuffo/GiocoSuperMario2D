@@ -12,17 +12,18 @@
         #terreno{
             background-image: url('mattoncinoSuperMario2D.png');
             width: 620px; height: 120px;
-            margin-top: 33em;
-            
+            position: absolute;
+            top: 33em;
         }
         #terreno2{
             background-image: url('mattoncinoSuperMario2D.png');
+            position: absolute;
+            top: 40.5em;
             height: 120px; width: 1500px;
         }
-        img{
-            position: absolute;
-            width: 1900px; height: 120px;
-            margin-top: -33em;
+        #nuvole{
+            background-image: url("cieloSuperMario2D.png");
+            width: 1900px; height: 300px;
         }
         #superMario{
             background-image: url('superMario2D.png');
@@ -30,7 +31,6 @@
             width: 50px;
             position: absolute;
             top: 465px;
-
         }
         p{
             margin: 1em;
@@ -38,9 +38,28 @@
             color: white;
             font-size: 20px;
         }
+        #sfondoMenu{
+            position: fixed;
+            top: 0px;
+            background-color: rgba(0, 0, 0, 0.365);
+            width: 100%;
+            height: 100vh;
+        }
+        #sfondoMenu div{
+            margin: 25%;
+            height: 50%;
+            width: 50%;
+            background-color: aliceblue;
+        }
+        #tastoGioca{
+            margin: 40% 0;
+            height: 20%;
+            width: 100px;
+        }
     </style>
     <script>
         "use strict";
+        let statoGioco=false;
         let superMarioX = 0;
         let superMarioY;
         let superMario;
@@ -59,28 +78,35 @@
         }
         let altezzaSalto=80; // Altezza del salto
         function pigiato(evento){
-            if(evento.key == 'w' || evento.key == ' '){
-                if(verificaCollisione()){
-                    // Salto verso l'alto
-                    superMarioY -= altezzaSalto;
-                    superMario.style.top = superMarioY + "px";
-                    setTimeout(abbassa,durataSalto);
+            //stato gioco indica se il gioco è avviato o se è in pausa
+            if(statoGioco){
+
+                if(evento.key == 'w' || evento.key == ' '){
+                    if(verificaCollisione()){
+                        // Salto verso l'alto
+                        superMarioY -= altezzaSalto;
+                        superMario.style.top = superMarioY + "px";
+                        superMario.style.left=superMarioX + "px";
+                        setTimeout(abbassa,durataSalto);
+                    }
+                    let durataSalto = 300;
                 }
-                let durataSalto = 300;
-            }
-	        if(evento.key == 's'){
-                if (!verificaCollisione()) {
-                        superMarioY += 10;
-                        superMario.style.top = superMarioY + "px";    
+                if(evento.key == 's'){
+                    if (!verificaCollisione()) {
+                            superMarioY += 10;
+                            superMario.style.top = superMarioY + "px";    
+                    }
                 }
+                if(evento.key == 'a'){
+                    superMarioX-=10; superMario.style.left = superMarioX +"px";
+                }
+                if(evento.key == 'd'){ 
+                    superMarioX+=10; superMario.style.left = superMarioX +"px";
+                    window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
+                }
+            
             }
-	        if(evento.key == 'a'){
-                superMarioX-=10; superMario.style.left = superMarioX +"px";
-            }
-	        if(evento.key == 'd'){ 
-                superMarioX+=10; superMario.style.left = superMarioX +"px";
-                window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
-            }
+            
         }
         function abbassa(){
             superMarioY+=altezzaSalto;
@@ -102,15 +128,22 @@
             );
         }
         function gravita() {
-            if (!verificaCollisione()) {
+            if (!verificaCollisione() && statoGioco) {
                 superMarioY += 5; // velocità di caduta
                 superMario.style.top = superMarioY + "px";
             }
+            gameOver();
         }
         function gameOver(){
             if(superMario.getBoundingClientRect().bottom >= window.innerHeight){
-
+                statoGioco=false;
+                document.getElementById("sfondoMenu").style.display="block";
             }
+        }
+        function inizioGioco(){
+            statoGioco=true;
+            document.getElementById("sfondoMenu").style.display="none";
+
         }
 
     </script>
@@ -119,13 +152,14 @@
         <div id="superMario"></div>
         <div id="terreno"></div>
         <div id="terreno2"></div>
+
         <div id="sfondoMenu">
             <div>
-                <button id="tastoGioca"> </button>
+                <button id="tastoGioca" onclick="inizioGioco()">Giocare</button>
             </div>
-            
         </div>
-        <img src="cieloSuperMario2D.png" alt="cielo" >
+
+        <div id="nuvole"></div>
         <audio src="Super Mario Bros. Theme Song.mp3" id="themeSong" ></audio>
     </body>
 </html>
