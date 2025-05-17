@@ -92,8 +92,11 @@
                     let durataSalto = 300;
                 }
                 if(evento.key == 's'){
-                            superMarioY += 10;
-                            superMario.style.top = superMarioY + "px";    
+                     if (!verificaCollisione()) {
+                        superMarioY += 10;
+                        superMario.style.top = superMarioY + "px";
+                     }
+                                
                     }
                 if(evento.key == 'a'){
                      if (!verificaCollisione()) {
