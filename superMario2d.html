@@ -98,7 +98,10 @@
                     }
                 }
                 if(evento.key == 'a'){
-                    superMarioX-=10; superMario.style.left = superMarioX +"px";
+                     if (!verificaCollisione()) {
+                        superMarioX-=10; superMario.style.left = superMarioX +"px";
+                     }
+                    
                 }
                 if(evento.key == 'd'){ 
                     superMarioX+=10; superMario.style.left = superMarioX +"px";
