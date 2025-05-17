@@ -49,7 +49,7 @@
             margin: 25%;
             height: 50%;
             width: 50%;
-            background-image: url("sfondoHomegioco.jpg");
+            background-color: aquamarine;
         }
         #tastoGioca{
             margin: 40% 0;
@@ -92,11 +92,9 @@
                     let durataSalto = 300;
                 }
                 if(evento.key == 's'){
-                    if (!verificaCollisione()) {
                             superMarioY += 10;
                             superMario.style.top = superMarioY + "px";    
                     }
-                }
                 if(evento.key == 'a'){
                      if (!verificaCollisione()) {
                         superMarioX-=10; superMario.style.left = superMarioX +"px";
