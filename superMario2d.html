@@ -21,6 +21,13 @@
             top: 40.5em;
             height: 120px; width: 1500px;
         }
+        #terreno3{
+            background-image: url('mattoncinoSuperMario2D.png');
+            position: absolute;
+            left: 100em;
+            top: 40.5em;
+            height: 120px; width: 1000px;
+        }
         #nuvole{
             background-image: url("cieloSuperMario2D.png");
             width: 1900px; height: 300px;
@@ -49,7 +56,7 @@
             margin: 25%;
             height: 50%;
             width: 50%;
-            background-color: aquamarine;
+            background-color: cornflowerblue;
         }
         #tastoGioca{
             margin: 40% 0;
@@ -85,6 +92,7 @@
                     if(verificaCollisione()){
                         // Salto verso l'alto
                         superMarioY -= altezzaSalto;
+                        superMarioX += 50; //spostamento in avanti durante il salto
                         superMario.style.top = superMarioY + "px";
                         superMario.style.left=superMarioX + "px";
                         setTimeout(abbassa,durataSalto);
@@ -99,9 +107,8 @@
                                 
                     }
                 if(evento.key == 'a'){
-                     if (!verificaCollisione()) {
-                        superMarioX-=10; superMario.style.left = superMarioX +"px";
-                     }
+                    superMarioX-=10; superMario.style.left = superMarioX +"px";
+                    window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
                     
                 }
                 if(evento.key == 'd'){ 
@@ -120,8 +127,9 @@
             let marioRect = superMario.getBoundingClientRect();
             let terreno1 = document.getElementById("terreno").getBoundingClientRect();
             let terreno2 = document.getElementById("terreno2").getBoundingClientRect();
+            let terreno3 = document.getElementById("terreno3").getBoundingClientRect();
 
-            return (verificaSingolaCollisione(marioRect, terreno1) || verificaSingolaCollisione(marioRect, terreno2));
+            return (verificaSingolaCollisione(marioRect, terreno1) || verificaSingolaCollisione(marioRect, terreno2) || verificaSingolaCollisione(marioRect, terreno3));
         }
         function verificaSingolaCollisione(rect1, rect2) {
             return !(
@@ -156,6 +164,7 @@
         <div id="superMario"></div>
         <div id="terreno"></div>
         <div id="terreno2"></div>
+        <div id="terreno3"></div>
 
         <div id="sfondoMenu">
             <div>
