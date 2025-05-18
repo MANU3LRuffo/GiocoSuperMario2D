@@ -95,6 +95,7 @@
                         superMarioX += 50; //spostamento in avanti durante il salto
                         superMario.style.top = superMarioY + "px";
                         superMario.style.left=superMarioX + "px";
+                        window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
                         setTimeout(abbassa,durataSalto);
                     }
                     let durataSalto = 300;
