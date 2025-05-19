@@ -26,7 +26,15 @@
             position: absolute;
             left: 100em;
             top: 40.5em;
-            height: 120px; width: 1000px;
+            height: 120px; width: 360px;
+        }
+        #terreno4{
+            background-image: url('mattoncinoSuperMario2D.png');
+            position: absolute;
+            left: 130em;
+            top: 40.5em;
+            height: 120px; width: 360px;
+
         }
         #nuvole{
             background-image: url("cieloSuperMario2D.png");
@@ -58,7 +66,26 @@
             width: 50%;
             background-color: cornflowerblue;
         }
+        #menuGameOver{
+            display: none;
+            position: fixed;
+            top: 0px;
+            background-color: rgba(0, 0, 0, 0.365);
+            width: 100%;
+            height: 100vh;
+        }
+        #menuGameOver div{
+            margin: 25%;
+            height: 50%;
+            width: 50%;
+            background-color: red;
+        }
         #tastoGioca{
+            margin: 40% 0;
+            height: 20%;
+            width: 100px;
+        }
+        #riavviaGioco{
             margin: 40% 0;
             height: 20%;
             width: 100px;
@@ -96,7 +123,6 @@
                         superMario.style.top = superMarioY + "px";
                         superMario.style.left=superMarioX + "px";
                         window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
-                        setTimeout(abbassa,durataSalto);
                     }
                     let durataSalto = 300;
                 }
@@ -129,8 +155,9 @@
             let terreno1 = document.getElementById("terreno").getBoundingClientRect();
             let terreno2 = document.getElementById("terreno2").getBoundingClientRect();
             let terreno3 = document.getElementById("terreno3").getBoundingClientRect();
+            let terreno4 = document.getElementById("terreno4").getBoundingClientRect();
 
-            return (verificaSingolaCollisione(marioRect, terreno1) || verificaSingolaCollisione(marioRect, terreno2) || verificaSingolaCollisione(marioRect, terreno3));
+            return (verificaSingolaCollisione(marioRect, terreno1) || verificaSingolaCollisione(marioRect, terreno2) || verificaSingolaCollisione(marioRect, terreno3)|| verificaSingolaCollisione(marioRect, terreno4));
         }
         function verificaSingolaCollisione(rect1, rect2) {
             return !(
@@ -150,7 +177,7 @@
         function gameOver(){
             if(superMario.getBoundingClientRect().bottom >= window.innerHeight){
                 statoGioco=false;
-                document.getElementById("sfondoMenu").style.display="block";
+                document.getElementById("menuGameOver").style.display="block";
             }
         }
         function inizioGioco(){
@@ -166,11 +193,18 @@
         <div id="terreno"></div>
         <div id="terreno2"></div>
         <div id="terreno3"></div>
+        <div id="terreno4"></div>
 
         <div id="sfondoMenu">
             <div>
                 <button id="tastoGioca" onclick="inizioGioco()">Giocare</button>
             </div>
+        </div>
+        <div id="menuGameOver">
+            <div>
+                <img src="gameOver.jpg" alt="gameOver">
+            </div>
+
         </div>
 
         <div id="nuvole"></div>
