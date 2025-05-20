@@ -45,9 +45,23 @@
         #terreno6{
             background-image: url('mattoncinoSuperMario2D.png');
             position: absolute;
-            left: 180em;
+            left: 195em;
             top: 47em;
-            height: 80px; width: 500px;
+            height: 180px; width: 500px;
+        }
+        #terreno7{
+            background-image: url('mattoncinoSuperMario2D.png');
+            position: absolute;
+            left: 232em;
+            top: 47em;
+            height: 180px; width: 500px;
+        }
+        #terreno8{
+            background-image: url('mattoncinoSuperMario2D.png');
+            position: absolute;
+            left: 268em;
+            top: 42em;
+            height: 180px; width: 500px;
         }
         #nuvole{
             background-image: url("cieloSuperMario2D.png");
@@ -87,16 +101,16 @@
             width: 100%;
             height: 100vh;
         }
-        #menuGameOver div{
-            margin: 25%;
-            height: 50%;
-            width: 50%;
-            background-color: red;
+        #menuGameOver img{
+            position: absolute;
+            width: 35em;
+            margin: 10em;
         }
         #tastoGioca{
             margin: 40% 0;
             height: 20%;
             width: 100px;
+            margin-left: 40%;
         }
         #riavviaGioco{
             margin: 40% 0;
@@ -135,7 +149,9 @@
                         superMarioX += 50; //spostamento in avanti durante il salto
                         superMario.style.top = superMarioY + "px";
                         superMario.style.left=superMarioX + "px";
-                        window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
+
+                      //  window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
+
                     }
                     let durataSalto = 300;
                 }
@@ -165,17 +181,28 @@
         }
         function verificaCollisione() {
             let marioRect = superMario.getBoundingClientRect();
+
+            //terreni di gioco in cui superMario ci deve camminare sopra
             let terreno1 = document.getElementById("terreno").getBoundingClientRect();
             let terreno2 = document.getElementById("terreno2").getBoundingClientRect();
             let terreno3 = document.getElementById("terreno3").getBoundingClientRect();
             let terreno4 = document.getElementById("terreno4").getBoundingClientRect();
             let terreno5 = document.getElementById("terreno5").getBoundingClientRect();
             let terreno6 = document.getElementById("terreno6").getBoundingClientRect();
+            let terreno7 = document.getElementById("terreno7").getBoundingClientRect();
+            let terreno8 = document.getElementById("terreno8").getBoundingClientRect();
 
-            return (verificaSingolaCollisione(marioRect, terreno1) || verificaSingolaCollisione(marioRect, terreno2) || verificaSingolaCollisione(marioRect, terreno3)|| verificaSingolaCollisione(marioRect, terreno4)|| verificaSingolaCollisione(marioRect, terreno5) || verificaSingolaCollisione(marioRect, terreno6));
+            //controllo di ogni singola collisione di superMario con i terreni di gioco
+            return (verificaSingolaCollisione(marioRect, terreno1) ||
+            verificaSingolaCollisione(marioRect, terreno2) ||
+              verificaSingolaCollisione(marioRect, terreno3) ||
+              verificaSingolaCollisione(marioRect, terreno4) ||
+              verificaSingolaCollisione(marioRect, terreno5) ||
+              verificaSingolaCollisione(marioRect, terreno6) || 
+              verificaSingolaCollisione(marioRect, terreno7) || verificaSingolaCollisione(marioRect, terreno8));
         }
         function verificaSingolaCollisione(rect1, rect2) {
-            return !(
+            return !( //controlla la singola collisione tra due blocchi
                 rect1.bottom < rect2.top ||
                 rect1.top > rect2.bottom ||
                 rect1.right < rect2.left ||
@@ -187,7 +214,7 @@
                 superMarioY += 5; // velocità di caduta
                 superMario.style.top = superMarioY + "px";
             }
-            gameOver();
+            gameOver(); //appena superMario cade nel vuoto il gioco si ferma
         }
         function gameOver(){
             if(superMario.getBoundingClientRect().bottom >= window.innerHeight){
@@ -211,6 +238,8 @@
         <div id="terreno4"></div>
         <div id="terreno5"></div>
         <div id="terreno6"></div>
+        <div id="terreno7"></div>
+        <div id="terreno8"></div>
 
         <div id="sfondoMenu">
             <div>
@@ -218,10 +247,7 @@
             </div>
         </div>
         <div id="menuGameOver">
-            <div>
-                <img src="gameOver.jpg" alt="gameOver">
-            </div>
-
+            <img src="gameOver.jpg" alt="gameOver">
         </div>
 
         <div id="nuvole"></div>
