@@ -59,13 +59,13 @@
         #terreno8{
             background-image: url('mattoncinoSuperMario2D.png');
             position: absolute;
-            left: 268em;
+            left: 267em;
             top: 42em;
-            height: 180px; width: 500px;
+            height: 180px; width: 530px;
         }
         #nuvole{
             background-image: url("cieloSuperMario2D.png");
-            width: 2500px; height: 300px;
+            width: 4800px; height: 1000px;
         }
         #superMario{
             background-image: url('superMario2D.png');
@@ -74,11 +74,13 @@
             position: absolute;
             top: 465px;
         }
-        p{
-            margin: 1em;
-            margin-top: -30em;
-            color: white;
-            font-size: 20px;
+        #castelloSuperMario{
+            background-image: url("castelloSuperMario2d.png");
+            position: absolute;
+            height: 137px;
+            width: 123px;
+            left: 4650px;
+            top: 540px;
         }
         #sfondoMenu{
             position: fixed;
@@ -104,7 +106,20 @@
         #menuGameOver img{
             position: absolute;
             width: 35em;
-            margin: 10em;
+            margin: 20em;
+        }
+        #menuVittoria{
+            display: none;
+            position: fixed;
+            top: 0px;
+            background-color: rgba(0, 0, 0, 0.365);
+            width: 100%;
+            height: 100vh;
+        }
+        #menuVittoria img{
+            position: absolute;
+            width: 35em;
+            margin: 20em;
         }
         #tastoGioca{
             margin: 40% 0;
@@ -124,9 +139,11 @@
         let superMarioX = 0;
         let superMarioY;
         let superMario;
+        let castelloSuperMario;
         let gravitaTimer;
         function avviaTimer(){
             superMario = document.getElementById("superMario");
+            castelloSuperMario = document.getElementById("castelloSuperMario");
             superMarioY = parseInt(window.getComputedStyle(superMario).top); 
             console.log(superMarioY);
 
@@ -150,7 +167,6 @@
                         superMario.style.top = superMarioY + "px";
                         superMario.style.left=superMarioX + "px";
 
-                      //  window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
 
                     }
                     let durataSalto = 300;
@@ -214,7 +230,8 @@
                 superMarioY += 5; // velocità di caduta
                 superMario.style.top = superMarioY + "px";
             }
-            gameOver(); //appena superMario cade nel vuoto il gioco si ferma
+            gameOver();
+            verificaVittoria(); //appena superMario cade nel vuoto il gioco si ferma
         }
         function gameOver(){
             if(superMario.getBoundingClientRect().bottom >= window.innerHeight){
@@ -225,13 +242,24 @@
         function inizioGioco(){
             statoGioco=true;
             document.getElementById("sfondoMenu").style.display="none";
+        }
+        function verificaVittoria(){
+            let marioRect = superMario.getBoundingClientRect();
+            let terrenoFinaleRect = document.getElementById("terreno8").getBoundingClientRect();
 
+            // verifica se è arrivato sul punto della vittoria
+            if(marioRect.bottom < terrenoFinaleRect.bottom && marioRect.top > terrenoFinaleRect.top && marioRect.right >= terrenoFinaleRect.right){
+                statoGioco= false;
+                clearInterval(gravitaTimer);
+                document.getElementById("menuVittoria").style.display="block";
+            }
         }
 
     </script>
 </head>
     <body onkeydown="pigiato(event)" onload="avviaTimer()" >
         <div id="superMario"></div>
+        <div id="castelloSuperMario"></div>
         <div id="terreno"></div>
         <div id="terreno2"></div>
         <div id="terreno3"></div>
@@ -249,8 +277,10 @@
         <div id="menuGameOver">
             <img src="gameOver.jpg" alt="gameOver">
         </div>
-
+        <div id="menuVittoria">
+            <img src="haiVintoSuperMario2d.jpg" alt="haiVinto">
+        </div>
         <div id="nuvole"></div>
-        <audio src="Super Mario Bros. Theme Song.mp3" id="themeSong" ></audio>
+        <audio src="Super Mario Bros. Theme Song.mp3" id="themeSong" loop ></audio>
     </body>
 </html>
