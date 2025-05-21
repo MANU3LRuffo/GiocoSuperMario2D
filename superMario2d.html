@@ -61,7 +61,7 @@
             position: absolute;
             left: 267em;
             top: 42em;
-            height: 180px; width: 530px;
+            height: 180px; width: 500px;
         }
         #nuvole{
             background-image: url("cieloSuperMario2D.png");
@@ -243,6 +243,13 @@
         function inizioGioco(){
             statoGioco=true;
             document.getElementById("sfondoMenu").style.display="none";
+
+            // lo riporta alla sua posizione iniziale quando aggiorni la pagina
+            superMarioX = 0;
+            superMarioY = 465;
+            superMario.style.left = superMarioX + "px";
+            superMario.style.top = superMarioY + "px";
+            window.scroll(0,0);
         }
         function verificaVittoria(){
             let marioRect = superMario.getBoundingClientRect();
