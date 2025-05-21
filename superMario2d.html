@@ -106,7 +106,7 @@
         #menuGameOver img{
             position: absolute;
             width: 35em;
-            margin: 20em;
+            margin: 10em;
         }
         #menuVittoria{
             display: none;
@@ -119,7 +119,7 @@
         #menuVittoria img{
             position: absolute;
             width: 35em;
-            margin: 20em;
+            margin: 10em;
         }
         #tastoGioca{
             margin: 40% 0;
@@ -141,6 +141,7 @@
         let superMario;
         let castelloSuperMario;
         let gravitaTimer;
+        let playerSonginSottofondo;
         function avviaTimer(){
             superMario = document.getElementById("superMario");
             castelloSuperMario = document.getElementById("castelloSuperMario");
@@ -148,13 +149,13 @@
             console.log(superMarioY);
 
             // fa partire la canzone
-            let player = document.getElementById("themeSong");
-            console.log(player);
-            player.play();
+            playerSonginSottofondo = document.getElementById("themeSong");
+            console.log(playerSonginSottofondo);
+            playerSonginSottofondo.play();
 
             gravitaTimer = setInterval(gravita, 30);
         }
-        let altezzaSalto=80; // Altezza del salto
+        let altezzaSalto=100; // Altezza del salto
         function pigiato(evento){
             //stato gioco indica se il gioco è avviato o se è in pausa
             if(statoGioco){
@@ -173,7 +174,7 @@
                 }
                 if(evento.key == 's'){
                      if (!verificaCollisione()) {
-                        superMarioY += 10;
+                        superMarioY += 13;
                         superMario.style.top = superMarioY + "px";
                      }
                                 
@@ -184,7 +185,7 @@
                     
                 }
                 if(evento.key == 'd'){ 
-                    superMarioX+=10; superMario.style.left = superMarioX +"px";
+                    superMarioX+=13; superMario.style.left = superMarioX +"px";
                     window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
                 }
             
@@ -246,15 +247,19 @@
         function verificaVittoria(){
             let marioRect = superMario.getBoundingClientRect();
             let terrenoFinaleRect = document.getElementById("terreno8").getBoundingClientRect();
-
+            let collisioneCastello = document.getElementById("castelloSuperMario").getBoundingClientRect();
             // verifica se è arrivato sul punto della vittoria
-            if(marioRect.bottom < terrenoFinaleRect.bottom && marioRect.top > terrenoFinaleRect.top && marioRect.right >= terrenoFinaleRect.right){
+            if(marioRect.bottom < (terrenoFinaleRect.bottom && collisioneCastello.bottom)  && marioRect.top > (terrenoFinaleRect.top && collisioneCastello.top) && marioRect.right >= (terrenoFinaleRect.right && collisioneCastello.right)){
                 statoGioco= false;
                 clearInterval(gravitaTimer);
                 document.getElementById("menuVittoria").style.display="block";
+                // la musica in sottofondo si stoppa e fa partire la canzone della vittoria
+                playerSonginSottofondo.pause();
+                let playerSongVittoria = document.getElementById("songVittoria");
+                console.log(playerSongVittoria);
+                playerSongVittoria.play();
             }
         }
-
     </script>
 </head>
     <body onkeydown="pigiato(event)" onload="avviaTimer()" >
@@ -282,5 +287,6 @@
         </div>
         <div id="nuvole"></div>
         <audio src="Super Mario Bros. Theme Song.mp3" id="themeSong" loop ></audio>
+        <audio src="Super Mario Bros. Music Vittoria.mp3" id="songVittoria" loop></audio>
     </body>
 </html>
