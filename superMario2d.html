@@ -238,6 +238,11 @@
             if(superMario.getBoundingClientRect().bottom >= window.innerHeight){
                 statoGioco=false;
                 document.getElementById("menuGameOver").style.display="block";
+
+                playerSonginSottofondo.pause();
+                let playerSongGameOver = document.getElementById("songGameOver");
+                console.log(playerSongGameOver);
+                playerSongGameOver.play();
             }
         }
         function inizioGioco(){
@@ -255,6 +260,7 @@
             let marioRect = superMario.getBoundingClientRect();
             let terrenoFinaleRect = document.getElementById("terreno8").getBoundingClientRect();
             let collisioneCastello = document.getElementById("castelloSuperMario").getBoundingClientRect();
+            
             // verifica se è arrivato sul punto della vittoria
             if(marioRect.bottom < (terrenoFinaleRect.bottom && collisioneCastello.bottom)  && marioRect.top > (terrenoFinaleRect.top && collisioneCastello.top) && marioRect.right >= (terrenoFinaleRect.right && collisioneCastello.right)){
                 statoGioco= false;
@@ -295,5 +301,6 @@
         <div id="nuvole"></div>
         <audio src="Super Mario Bros. Theme Song.mp3" id="themeSong" loop ></audio>
         <audio src="Super Mario Bros. Music Vittoria.mp3" id="songVittoria" loop></audio>
+        <audio src="Super Mario Bros - game over song.mp3" id="songGameOver" loop></audio>
     </body>
 </html>
