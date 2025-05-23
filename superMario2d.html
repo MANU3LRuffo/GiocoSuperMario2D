@@ -7,7 +7,7 @@
         body{
             margin: 0;
             background-color: cornflowerblue;
-
+            overflow: hidden;
         }
         #terreno{
             background-image: url('mattoncinoSuperMario2D.png');
@@ -150,7 +150,6 @@
             console.log(superMarioY);
 
             gravitaTimer = setInterval(gravita, 30);
-            timerAnimazione = window.setInterval(cambiaImmagine, 100);
         }
         let altezzaSalto=100; // Altezza del salto
         function pigiato(evento){
@@ -239,6 +238,7 @@
                 let playerSongGameOver = document.getElementById("songGameOver");
                 console.log(playerSongGameOver);
                 playerSongGameOver.play();
+                clearInterval(timerAnimazione);
             }
         }
         function inizioGioco(){
@@ -256,6 +256,8 @@
             superMario.style.left = superMarioX + "px";
             superMario.style.top = superMarioY + "px";
             window.scroll(0,0);
+
+            timerAnimazione = window.setInterval(cambiaImmagine, 100);
         }
         function verificaVittoria(){
             let marioRect = superMario.getBoundingClientRect();
@@ -272,6 +274,7 @@
                 let playerSongVittoria = document.getElementById("songVittoria");
                 console.log(playerSongVittoria);
                 playerSongVittoria.play();
+                clearInterval(timerAnimazione);
             }
         }
         let timerAnimazione;
@@ -285,7 +288,6 @@
                 posizioneX=0;
             }
             superMario.style.backgroundPosition=`${posizioneX}px 0px`;
-            console.log()
         }
     </script>
 </head>
