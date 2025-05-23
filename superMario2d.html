@@ -68,11 +68,12 @@
             width: 4800px; height: 1000px;
         }
         #superMario{
-            background-image: url('superMario2D.png');
-            height: 54px;
-            width: 40px;
+            background-image: url('movimentoSuperMario2D_1.png');
+            background-position: 0px 0px;
+            height:111px;
+            width:56px;
             position: absolute;
-            top: 475px;
+            top: 420px;
         }
         #castelloSuperMario{
             background-image: url("castelloSuperMario2d.png");
@@ -149,6 +150,7 @@
             console.log(superMarioY);
 
             gravitaTimer = setInterval(gravita, 30);
+            timerAnimazione = window.setInterval(cambiaImmagine, 100);
         }
         let altezzaSalto=100; // Altezza del salto
         function pigiato(evento){
@@ -250,7 +252,7 @@
 
             // lo riporta alla sua posizione iniziale quando aggiorni la pagina
             superMarioX = 0;
-            superMarioY = 465;
+            superMarioY = 420;
             superMario.style.left = superMarioX + "px";
             superMario.style.top = superMarioY + "px";
             window.scroll(0,0);
@@ -271,6 +273,19 @@
                 console.log(playerSongVittoria);
                 playerSongVittoria.play();
             }
+        }
+        let timerAnimazione;
+        let posizioneX=0;
+        function cambiaImmagine(){
+            superMario= document.getElementById("superMario");
+            posizioneX-=83.5;
+
+            //per bloccare lo spostamento dell'immagine controlliamo la larghezza di tutta l'immagine e portiamo la posizione a 0
+            if(posizioneX>=501){
+                posizioneX=0;
+            }
+            superMario.style.backgroundPosition=`${posizioneX}px 0px`;
+            console.log()
         }
     </script>
 </head>
