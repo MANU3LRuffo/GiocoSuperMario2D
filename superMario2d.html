@@ -176,13 +176,21 @@
                                 
                     }
                 if(evento.key == 'a'){
-                    superMarioX-=10; superMario.style.left = superMarioX +"px";
+                    superMarioX-=13; superMario.style.left = superMarioX +"px";
                     window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
+                    if(verificaCollisione()){
+                        superMarioX+=13; //annulla il movimento verso sinistra che va sul lato del terreno
+                        superMario.style.left = superMarioX + "px";
+                    }
                     
                 }
                 if(evento.key == 'd'){ 
                     superMarioX+=13; superMario.style.left = superMarioX +"px";
                     window.scrollTo(superMarioX - window.innerWidth / 2, superMarioY);
+                    if(verificaCollisione()){
+                        superMarioX-=13; //annulla il movimento verso destra che va sul lato del terreno
+                        superMario.style.left = superMarioX + "px";
+                    }
                 }
             }
             
